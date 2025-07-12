@@ -34,11 +34,11 @@ public static class ArraySelectorSolution
     private static char[] ListSelector(char[] list1, char[] list2, int[] select)
     {
         var result = new char[select.Length];
-        var l1Idx = 0;
-        var l2Idx = 0;
+        var l3Idx = 0;
+        var l4Idx = 0;
         for (var i = 0; i < select.Length; i++)
         {
-            result[i] = select[i] == 1 ? list1[l1Idx++] : list2[l2Idx++];
+            result[i] = select[i] == 1 ? list1[l3Idx++] : list2[l4Idx++];
         }
 
         return result;
