@@ -22,7 +22,21 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>(words);
+        var WordPair = new List<string>();
+
+        foreach (var letter in words)
+        {
+            if (letter[0] == letter[1]) continue;
+
+            var reversedLetters = new string(new char[] { letter[1], letter[0] });
+            if (wordSet.Contains(reversedLetters))
+                WordPair.Add($"{letter} & {reversedLetters} ");
+
+            wordSet.Remove(letter);
+            wordSet.Remove(reversedLetters);
+        }
+        return WordPair.ToArray();
     }
 
     /// <summary>
@@ -67,8 +81,30 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+
+        if (word1.Length != word2.Length) return false;
+
+        var charCount = new Dictionary<char, int>();
+
+        foreach (var letter in word1)
+        {
+            if (!charCount.ContainsKey(letter)) charCount[letter] = 0;
+            charCount[letter]++;
+        }
+
+        foreach (var letters in word2)
+        {
+            if (!charCount.ContainsKey(letters)) return false;
+            charCount[letters]--;
+            if (charCount[letters] < 0) return false;
+        }
+
+        return true;
     }
+
+
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
