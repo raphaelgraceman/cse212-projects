@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 
 public class LinkedList : IEnumerable<int>
 {
@@ -33,6 +34,19 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
+        Node newNode = new(value);
+        //Point to both head and tail if list is empty
+        if (_tail == null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            newNode.Next = _tail;
+            _tail.Prev = newNode;
+            _tail = newNode;
+        }
     }
 
 
@@ -65,7 +79,30 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+   
+        // Print to the console, if the list is empty
+        if (_tail == null)
+        {
+            Console.WriteLine("List is empty.");
+            return;
+        }
+
+        // If the list has only one node
+        if (_tail.Prev == null)
+        {
+            _head = null;
+            _tail = null;
+            return;
+        }
+
+        // If more than one node
+        _tail.Prev.Next = null;  
+        _tail = _tail.Prev;      
+
+
     }
+    
+    
 
     /// <summary>
     /// Insert 'newValue' after the first occurrence of 'value' in the linked list.
@@ -109,6 +146,28 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+        // Start at the head
+        Node? current = _head;
+        
+        while (current != null)
+        {
+            if (current.Data == value)
+            {
+                if (current == _head)
+                {
+                    _head = current.Next;
+                    if (_head != null)
+                        _head.Prev = null;
+                    else
+                        _tail = null;
+                }
+                return; 
+            }
+
+            current = current.Next;
+        }
+
+
     }
 
     /// <summary>
